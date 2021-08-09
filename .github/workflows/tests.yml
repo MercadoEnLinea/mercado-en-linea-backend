@@ -1,0 +1,90 @@
+name: tests
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+jobs:
+  linux_tests:
+    env:
+      DB_CONNECTION: sqlite
+      DB_DATABASE: database/database.sqlite
+      APP_NAME: ci-cd
+      APP_ENV: local
+      APP_KEY: base64:ztA/etvOT2JCyJmnNN+Bc/QY45D4p8bbplMzXEXg0sQ=
+      TIMESTAMP_GOOGLE_2FA: 26213400
+    runs-on: ubuntu-20.04
+
+    services:
+      memcached:
+        image: memcached:1.6-alpine
+        ports:
+          - 11211:11211
+      redis:
+        image: redis:5.0
+        ports:
+          - 6379:6379
+        options: --entrypoint redis-server
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [ '8.0' ]
+        stability: [ prefer-stable ]
+
+    name: PHP ${{ matrix.php }} - ${{ matrix.stability }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: setup framework directory
+        run: mkdir -p storage/framework/{sessions,views,cache}
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd, redis, memcached, imagick
+          tools: composer:v2
+          coverage: none
+      - name: Create database
+        run: |
+          mkdir -p database
+          touch database/database.sqlite
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        uses: nick-invision/retry@v1
+        with:
+          timeout_minutes: 5
+          max_attempts: 5
+          command: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress
+
+      - name: migrate and seed
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+        run: php artisan migrate --seed --force
+
+      - name: installing passport
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+        run: php artisan passport:install
+
+      - name: Executing test (Unit and Feature)
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+        run: vendor/bin/phpunit --testdox
+
+      - name: Runing larastan Level 8
+        run: ./vendor/bin/phpstan analyze
