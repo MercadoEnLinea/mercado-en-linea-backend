@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Laravel\Passport\Passport;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Passport::routes();
+
+
+
+Route::post('/register', [\App\Http\Controllers\AuthenticationController::class, 'register']);
+Route::post('/contact/verify', [\App\Http\Controllers\AuthenticationController::class, 'verifyChannel'])->middleware('auth:api');
+
+Route::post('/authenticate', [\App\Http\Controllers\AuthenticationController::class, 'createToken']);
