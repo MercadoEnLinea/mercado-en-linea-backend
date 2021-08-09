@@ -42,3 +42,7 @@ Route::post('/categories', [\App\Http\Controllers\CategoryController::class, 'st
 Route::delete('/categories', [\App\Http\Controllers\CategoryController::class, 'delete'] );
 
 
+Route::get('/transactions',  [\App\Http\Controllers\TransactionController::class, 'index'] );
+Route::get('/transactions/{transaction}',  [\App\Http\Controllers\TransactionController::class, 'show'] );
+Route::post('/transactions/{transaction}/review',  [\App\Http\Controllers\TransactionController::class, 'review'] )->middleware('auth:api');
+Route::post('/purchase',  [\App\Http\Controllers\TransactionController::class, 'purchase'] )->middleware('auth:api');
