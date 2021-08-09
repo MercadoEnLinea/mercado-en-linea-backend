@@ -20,17 +20,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 
-
-
-
-
-
-
-
-
-
 Route::get('/products', [\App\Http\Controllers\ProductController::class, 'index'] );
 Route::get('/products/{product}', [\App\Http\Controllers\ProductController::class, 'show'] );
 Route::post('/products', [\App\Http\Controllers\ProductController::class, 'store'] )->middleware('auth:api');
 Route::delete('/products', [\App\Http\Controllers\ProductController::class, 'delete'] );
+
+
+Route::get('/categories', [\App\Http\Controllers\CategoryController::class, 'index'] );
+Route::get('/categories/{category}', [\App\Http\Controllers\CategoryController::class, 'show'] );
+Route::post('/categories', [\App\Http\Controllers\CategoryController::class, 'store'] );
+Route::delete('/categories', [\App\Http\Controllers\CategoryController::class, 'delete'] );
 
