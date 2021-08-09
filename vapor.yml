@@ -1,0 +1,19 @@
+id: 22468
+name: mercardo-en-linea-backend
+environments:
+    production:
+        memory: 1024
+        cli-memory: 512
+        runtime: 'php-8.0:al2'
+        database: mercadoProd
+        build:
+            - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev'
+            - 'php artisan event:cache'
+    staging:
+        memory: 1024
+        cli-memory: 512
+        database: mercado
+        runtime: 'php-8.0:al2'
+        build:
+            - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install'
+            - 'php artisan event:cache'
