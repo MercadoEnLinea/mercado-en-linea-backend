@@ -17,3 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+
+
+Route::get('/transactions',  [\App\Http\Controllers\TransactionController::class, 'index'] );
+Route::get('/transactions/{transaction}',  [\App\Http\Controllers\TransactionController::class, 'show'] );
+Route::post('/transactions/{transaction}/review',  [\App\Http\Controllers\TransactionController::class, 'review'] )->middleware('auth:api');
+Route::post('/purchase',  [\App\Http\Controllers\TransactionController::class, 'purchase'] )->middleware('auth:api');
