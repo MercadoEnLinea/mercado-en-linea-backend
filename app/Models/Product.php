@@ -46,8 +46,10 @@ class Product extends BaseModel
         'payment_options' => 'array',
     ];
 
+
     protected $with = ['images', 'seller'];
     protected $appends = ['sell_count'];
+
 
     public function images()
     {

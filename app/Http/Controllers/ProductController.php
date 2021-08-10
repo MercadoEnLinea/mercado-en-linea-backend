@@ -8,6 +8,7 @@ use App\Http\Requests\ProductCreateRequest;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -39,6 +40,15 @@ class ProductController extends Controller
 
         $request->merge(['seller_id' => $request->user()->id]);
         $product = Product::create($request->input());
+
+        $images = $request->input('images', []);
+
+        foreach ($images as $image)
+        {
+            ProductImage::create(['product_id' => $product->id,
+                'url' => $image]);
+
+        }
 
         return new ProductResource($product);
     }
