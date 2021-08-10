@@ -46,6 +46,8 @@ class Product extends BaseModel
         'payment_options' => 'array',
     ];
 
+    protected $with = ['images'];
+
     public function images()
     {
         return $this->hasMany(ProductImage::class);

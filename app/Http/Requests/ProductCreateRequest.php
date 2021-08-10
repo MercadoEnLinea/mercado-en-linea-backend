@@ -21,7 +21,8 @@ class ProductCreateRequest extends BaseRequest
             'delivery_options' => 'required|array',
             'payment_options' => 'required|array',
             'category_id' => 'required|exists:categories,id',
-            'images' => 'sometimes|url'
+            'images' => 'sometimes|array',
+            'images.*' => 'sometimes|url'
         ];
     }
 }
