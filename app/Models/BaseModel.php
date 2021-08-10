@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Pagination\LengthAwarePaginator;
 use \Illuminate\Database\Eloquent\Builder;
+use  Illuminate\Contracts\Pagination\LengthAwarePaginator;
+
 
 /**
  * App\Models\BaseModel

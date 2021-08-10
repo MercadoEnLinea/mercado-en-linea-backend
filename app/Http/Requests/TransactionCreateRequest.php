@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+
 use Illuminate\Validation\Rule;
 
 class TransactionCreateRequest extends BaseRequest
@@ -17,8 +18,10 @@ class TransactionCreateRequest extends BaseRequest
     public function rules()
     {
         return [
+
             'product_id' => 'required|integer|exists:products,id',
             'quantity' => 'sometimes|integer|min:1'
+
         ];
     }
 }

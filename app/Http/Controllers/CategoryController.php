@@ -37,7 +37,7 @@ class CategoryController extends Controller
 
         $perPage = $request->input('per_page', 10);
         $products = $category->products()->paginate($perPage);
-        $category->products = $products;
+
 
         return new CategoryResource($category);
     }
@@ -81,7 +81,7 @@ class CategoryController extends Controller
 
         if($category->products()->count() > 0)
         {
-            return new ErrorResource();
+            return new ErrorResource(['message' => 'A category must be empty for it to be deleted']);
         }
     }
 

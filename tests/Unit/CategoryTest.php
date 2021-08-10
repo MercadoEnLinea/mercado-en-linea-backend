@@ -14,11 +14,11 @@ class CategoryTest extends TestCase
     }
 
     /**
-     * A basic unit test example.
+     * Test that a Category can be created
      *
      * @return void
      */
-    public function test_create()
+    public function test_create() : void
     {
 
         $data = [
