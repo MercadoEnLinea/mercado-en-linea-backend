@@ -44,13 +44,13 @@ class ContactChannelVerificationCode extends Model
     protected $fillable = ['user_id', 'channel_type', 'channel', 'code', 'used'];
 
 
-    public static function verify(User $user, string $channelType,  string $code)
+    public static function verify(User $user, string $channelType, string $code)
     {
 
-        $channelType = $channelType== 'EMAIL'? self::EMAIL: self::PHONE;
+        $channelType = $channelType == 'EMAIL' ? self::EMAIL : self::PHONE;
 
 
-        $channel = $channelType == self::EMAIL? $user->email: $user->phone;
+        $channel = $channelType == self::EMAIL ? $user->email : $user->phone;
 
         $validCode = self::where('channel_type', $channelType)
             ->where('used', false)
@@ -60,15 +60,12 @@ class ContactChannelVerificationCode extends Model
             ->first();
 
 
-
-        if($validCode != null)
-        {
-            if($channelType == self::EMAIL)
-            {
+        if ($validCode != null) {
+            if ($channelType == self::EMAIL) {
 
                 $user->email_verified_at = now();
 
-            }else{
+            } else {
                 $user->phone_verified_at = now();
             }
 
@@ -139,21 +136,26 @@ class ContactChannelVerificationCode extends Model
     public function sms()
     {
 
-        $client = new Client(config('twilio.account'), config('twilio.token'));
-
-        $cellphone = $this->channel;
-        $message = $this->code;
+        try {
 
 
-        $client->messages->create(
-            '+52'.$cellphone,
-            [
-                'from' => '+14159650513',
-                'body' => $message,
+            $client = new Client(config('twilio.account'), config('twilio.token'));
 
-            ]
-        );
+            $cellphone = $this->channel;
+            $message = $this->code;
 
+
+            $client->messages->create(
+                '+52' . $cellphone,
+                [
+                    'from' => '+14159650513',
+                    'body' => $message,
+
+                ]
+            );
+        } catch (\Exception $exception) {
+
+        }
 
     }
 }
