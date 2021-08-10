@@ -39,7 +39,7 @@ class Product extends BaseModel
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'delivery_options', 'payment_options', 'seller_id', 'category_id'];
+    protected $fillable = ['name', 'description', 'delivery_options', 'payment_options', 'seller_id', 'category_id', 'price'];
 
     protected $casts = [
         'delivery_options' => 'array',
