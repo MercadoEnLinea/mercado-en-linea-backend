@@ -4,6 +4,7 @@ namespace Tests;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -58,6 +59,17 @@ abstract class TestCase extends BaseTestCase
         $product->delivery_options = ['PERSONAL', 'MAIL'];
         $product->payment_options = ['CASH'];
         $product->save();
+
+
+
+        $data = [
+            'seller_id' => 2,
+            'buyer_id' => 1,
+            'product_id' => 1
+
+        ];
+
+        $transaction = Transaction::create($data);
 
     }
 }
