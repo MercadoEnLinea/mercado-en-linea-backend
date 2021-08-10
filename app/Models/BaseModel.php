@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
+use \Illuminate\Database\Eloquent\Builder;
 
 /**
  * App\Models\BaseModel
@@ -25,15 +26,19 @@ class BaseModel extends Model
      * @param string|null $orderDirection
      * @return LengthAwarePaginator
      */
-    public static function sorter(int $perPage =  10, ?string $orderField = null, ?string $orderDirection =  null) : LengthAwarePaginator
+    public static function sorter(int $perPage = 10, ?string $orderField = null, ?string $orderDirection = null, array $queries = []): LengthAwarePaginator
     {
 
         $orderField = $orderField ?? 'id';
         $orderDirection = $orderDirection ?? 'ASC';
 
 
-
         $query = self::query();
+
+        foreach ($queries as $field => $value) {
+
+            $query = $query->where($field, 'like', '%' . $value . '%');
+        }
         $query = $query->orderBy($orderField, $orderDirection);
 
         return $query->paginate($perPage);
