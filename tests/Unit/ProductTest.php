@@ -15,11 +15,11 @@ class ProductTest extends TestCase
     }
 
     /**
-     * A basic unit test example.
+     * test that a Product can be created
      *
      * @return void
      */
-    public function test_create()
+    public function test_create() : void
     {
 
         $data = [
