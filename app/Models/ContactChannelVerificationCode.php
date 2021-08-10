@@ -60,6 +60,21 @@ class ContactChannelVerificationCode extends Model
             ->first();
 
 
+
+        if($validCode != null)
+        {
+            if($channelType == self::EMAIL)
+            {
+
+                $user->email_verified_at = now();
+
+            }else{
+                $user->phone_verified_at = now();
+            }
+
+            $user->save();
+        }
+
         return new ContactVerificationResource(['valid' => $validCode != null,
             'channel' => $channel]);
 
@@ -98,7 +113,7 @@ class ContactChannelVerificationCode extends Model
     {
         switch ($this->channel_type) {
             case self::PHONE:
-                //TODO
+                $this->sms();
                 break;
 
             default:

@@ -2,9 +2,11 @@
 
 use App\Models\Complaint;
 use App\Models\ComplaintMessage;
+use App\Models\ContactChannelVerificationCode;
 use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransactionReview;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
@@ -62,6 +64,8 @@ Route::get('resset', function (){
     ComplaintMessage::truncate();
     Transaction::truncate();
     Product::truncate();
+    ContactChannelVerificationCode::truncate();
+
 
     Schema::enableForeignKeyConstraints();
 });
