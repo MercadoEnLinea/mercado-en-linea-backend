@@ -29,6 +29,7 @@ class ProductTest extends TestCase
             'category_id' => 1,
             'delivery_options' => ['PERSONAL', 'MAIL'],
             'payment_options' => ['CASH'],
+            'price' => 1.5,
             'images' => ['https://carlosgomez.mx/assets/front/img/avatar_1624175972505033680.png']
 
             ];
@@ -44,6 +45,7 @@ class ProductTest extends TestCase
             'name' => 'Unit Testing Product',
             'description' => 'Unit Testing Products',
             'category_id' => 1,
+            'price' => 1.5,
             'delivery_options' => json_encode(['PERSONAL', 'MAIL']),
             'payment_options' => json_encode(['CASH'])
 

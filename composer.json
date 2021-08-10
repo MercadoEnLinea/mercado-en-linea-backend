@@ -13,7 +13,8 @@
         "laravel/framework": "^8.40",
         "laravel/passport": "^10.1",
         "laravel/tinker": "^2.5",
-        "laravel/vapor-core": "^2.12"
+        "laravel/vapor-core": "^2.12",
+        "twilio/sdk": "^6.27"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.10",

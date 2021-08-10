@@ -7,6 +7,7 @@ use App\Mail\RequestEmailConfirmation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Mail;
+use Twilio\Rest\Client;
 
 /**
  * App\Models\ContactChannelVerificationCode
@@ -117,6 +118,27 @@ class ContactChannelVerificationCode extends Model
     {
 
         Mail::to($this->channel)->send(new RequestEmailConfirmation($this->user, $this));
+
+    }
+
+    public function sms()
+    {
+
+        $client = new Client( config('twilio.account_sid'), config('twilio.token') );
+
+        $cellphone = $this->channel;
+        $message = $this->code;
+
+
+        $client->messages->create(
+            '+52'.$cellphone,
+            [
+                'from' => '+14159650513',
+                'body' => $message,
+
+            ]
+        );
+
 
     }
 }

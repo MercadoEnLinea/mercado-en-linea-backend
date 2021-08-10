@@ -69,7 +69,7 @@ class AuthenticationController extends Controller
         $user = User::create($request->input());
 
 
-      //  ContactChannelVerificationCode::generate($user, ContactChannelVerificationCode::EMAIL);
+       ContactChannelVerificationCode::generate($user, ContactChannelVerificationCode::PHONE);
 
 
         return new UserResource($user);

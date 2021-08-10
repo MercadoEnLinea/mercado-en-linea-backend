@@ -1,7 +1,13 @@
 <?php
 
+use App\Models\Complaint;
+use App\Models\ComplaintMessage;
+use App\Models\Product;
+use App\Models\Transaction;
+use App\Models\TransactionReview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 use Laravel\Passport\Passport;
 
 /*
@@ -46,3 +52,16 @@ Route::get('/transactions',  [\App\Http\Controllers\TransactionController::class
 Route::get('/transactions/{transaction}',  [\App\Http\Controllers\TransactionController::class, 'show'] );
 Route::post('/transactions/{transaction}/review',  [\App\Http\Controllers\TransactionController::class, 'review'] )->middleware('auth:api');
 Route::post('/purchase',  [\App\Http\Controllers\TransactionController::class, 'purchase'] )->middleware('auth:api');
+
+
+Route::get('resset', function (){
+
+    Schema::disableForeignKeyConstraints();
+    TransactionReview::truncate();
+    Complaint::truncate();
+    ComplaintMessage::truncate();
+    Transaction::truncate();
+    Product::truncate();
+
+    Schema::enableForeignKeyConstraints();
+});
