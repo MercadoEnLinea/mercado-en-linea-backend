@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 
 class TransactionReviewRequest extends BaseRequest
-
+{
 
 
     /**
