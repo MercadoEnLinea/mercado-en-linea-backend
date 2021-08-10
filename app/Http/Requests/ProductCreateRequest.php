@@ -20,6 +20,7 @@ class ProductCreateRequest extends BaseRequest
             'description' => 'required|string',
             'delivery_options' => 'required|array',
             'payment_options' => 'required|array',
+            'price' => 'required|numeric|min:0.01',
             'category_id' => 'required|exists:categories,id',
             'images' => 'sometimes|array',
             'images.*' => 'sometimes|url'
