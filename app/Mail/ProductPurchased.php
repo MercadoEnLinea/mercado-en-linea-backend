@@ -12,6 +12,7 @@ class ProductPurchased extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public Transaction $transaction;
     /**
      * Create a new message instance.
      *
@@ -19,7 +20,7 @@ class ProductPurchased extends Mailable
      */
     public function __construct(Transaction $transaction)
     {
-        //
+        $this->transaction = $transaction;
     }
 
     /**
@@ -29,6 +30,6 @@ class ProductPurchased extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->view('mails.productPurchased');
     }
 }
