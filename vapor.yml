@@ -9,6 +9,8 @@ environments:
         build:
             - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev'
             - 'php artisan event:cache'
+        deploy:
+          - 'php artisan migrate --force'
     staging:
         memory: 1024
         cli-memory: 512
@@ -17,3 +19,5 @@ environments:
         build:
             - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install'
             - 'php artisan event:cache'
+        deploy:
+          - 'php artisan migrate --force'
