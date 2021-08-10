@@ -29,7 +29,18 @@ class AddColumnsToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('phone');
+
+
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+
             $table->dropColumn('phone_verified_at');
+
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+
             $table->dropColumn('account_verified');
 
         });
