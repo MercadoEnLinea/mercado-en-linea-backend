@@ -18,7 +18,16 @@ class ProductController extends Controller
     {
 
         $perPage = $request->input('per_page', 10);
-        $products = Product::sorter($perPage, $request->input('order_field'), $request->input('order_direction'));
+
+        $queryField =$request->input('queryField', null);
+        $querySearch =$request->input('querySearch', null);
+
+        $queries = [];
+        if($queryField != null && $querySearch != null)
+        {
+            $queries[$queryField] = $querySearch;
+        }
+        $products = Product::sorter($perPage, $request->input('order_field'), $request->input('order_direction'), $queries);
 
         return new ProductCollection($products);
     }

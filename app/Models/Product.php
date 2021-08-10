@@ -39,7 +39,7 @@ class Product extends BaseModel
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'delivery_options', 'payment_options', 'seller_id' , 'category_id'];
+    protected $fillable = ['name', 'description', 'delivery_options', 'payment_options', 'seller_id', 'category_id'];
 
     protected $casts = [
         'delivery_options' => 'array',
@@ -47,6 +47,7 @@ class Product extends BaseModel
     ];
 
     protected $with = ['images', 'seller'];
+    protected $appends = ['sell_count'];
 
     public function images()
     {
@@ -56,6 +57,16 @@ class Product extends BaseModel
     public function seller()
     {
         return $this->belongsTo(User::class, 'seller_id');
+    }
+
+    public function getSellCountAttribute()
+    {
+        return $this->purchases()->count();
+    }
+
+    public function purchases()
+    {
+        return $this->hasMany(Transaction::class, 'product_id');
     }
 
     public function updateCounter()
