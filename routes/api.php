@@ -65,6 +65,7 @@ Route::get('resset', function (){
     Transaction::truncate();
     Product::truncate();
     ContactChannelVerificationCode::truncate();
+    User::truncate();
 
 
     Schema::enableForeignKeyConstraints();

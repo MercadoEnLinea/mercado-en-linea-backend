@@ -139,7 +139,7 @@ class ContactChannelVerificationCode extends Model
     public function sms()
     {
 
-        $client = new Client( config('twilio.account_sid'), config('twilio.token') );
+        $client = new Client(config('twilio.account'), config('twilio.token'));
 
         $cellphone = $this->channel;
         $message = $this->code;
